@@ -77,7 +77,10 @@ public class AlbumsMain extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View v,
                                     final int position, long id) {
                 //GO TO PHOTOS
-                startActivity(new Intent(AlbumsMain.this, PhotosView.class));
+                Intent intent = new Intent(AlbumsMain.this, PhotosView.class);
+                intent.putExtra("currentAlbum", albums.get(position));
+                startActivity(intent);
+
             }
         });
 
