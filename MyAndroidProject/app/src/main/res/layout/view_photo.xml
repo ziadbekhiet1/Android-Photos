@@ -11,7 +11,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        tools:layout_editor_absoluteY="0dp"
+        tools:ignore="MissingConstraints">
 
         <ImageView
             android:id="@+id/imageView"
@@ -44,25 +45,29 @@
             android:id="@+id/renameButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Rename" />
+            android:text="Rename"
+            android:onClick="renamePhoto"/>
 
         <Button
             android:id="@+id/movePhotoButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Move Photo" />
+            android:text="Move Photo"
+            android:onClick="movePhoto"/>
 
         <Button
             android:id="@+id/buttonNext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Next Photo" />
+            android:text="Next Photo"
+            android:onClick="nextPhoto"/>
 
         <Button
             android:id="@+id/buttonPrev"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Previous Photo" />
+            android:text="Previous Photo"
+            android:onClick="prevPhoto"/>
 
     </LinearLayout>
 

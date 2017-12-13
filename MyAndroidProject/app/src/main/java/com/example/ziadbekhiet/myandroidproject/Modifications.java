@@ -1,6 +1,5 @@
 package com.example.ziadbekhiet.myandroidproject;
 
-import android.annotation.SuppressLint;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 
-/**
- * Created by ziadbekhiet on 11/29/17.
- */
+import main.R;
 
 public class Modifications extends AppCompatActivity {
 

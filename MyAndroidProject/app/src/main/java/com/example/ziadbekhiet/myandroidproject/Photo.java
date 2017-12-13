@@ -1,200 +1,119 @@
 package com.example.ziadbekhiet.myandroidproject;
 
-import android.media.Image;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * This class represents a photo, which contains numerous properties
  * to store and identify an individual photo.
- * 
+ *
  * @author Mike Allen
  * @author Ziad Bekhiet
  */
 public class Photo implements Serializable {
-	
+
 	/**
 	 * The actual photo stored in a file
 	 */
-	private Image photo;
-	
+	private transient Bitmap photo;
+
+	private String location;
+
 	/**
 	 * The name of the photo.
 	 */
 	private String photoName;
-	
-	/**
-	 * The caption of the photo.
-	 */
-	private String caption;
 
-	/**
-	 * The file type of the photo.
-	 */
-	private String fileType; // .jpg, .png, etc.
+	private String caption;
 
 	/**
 	 * A list of tags associated with the photo.
 	 */
 	private ArrayList<Tag> tags;
-	
-	/**
-	 * A list of albums this photo is in.
-	 */
-	private ArrayList<AlbumObject> albums;
 
-	/**
-	 * date and time for photo
-	 */
-	private Date date;
-
-	/**
-	 * The type of photo (stock photo or user photo)
-	 */
-	
 	/**
 	 * Creates a new instance of a photo.
 	 */
 	public Photo() {
-	
-		this.date = Calendar.getInstance().getTime();
+
 		photo = null;
+		caption = null;
 		this.tags = new ArrayList<Tag>();
 	}
-	
-	/**
-	 * Creates a new instance of a photo.
-	 */
-	public Photo(Image photo) {
-	
-		this.photo = photo;
-		this.tags = new ArrayList<Tag>();
-	}
-	
+
 	/**
 	 * Returns the image
-	 * 
+	 *
 	 * @return the image
 	 */
-	public Image getPhoto() {
-		
+	public Bitmap getPhoto() {
+
 		return this.photo;
 	}
-	
+
 	/**
 	 * Returns the name of the photo
-	 * 
+	 *
 	 * @return the name of the photo
 	 */
 	public String getPhotoName() {
-	
+
 		return this.photoName;
 	}
-	
-	/**
-	 * Returns the photo's caption
-	 * 
-	 * @return the caption of the photo
-	 */
+
 	public String getCaption() {
-		
+
 		return this.caption;
 	}
-	
-	/**
-	 * Returns the type of file
-	 * 
-	 * @return the type of the file
-	 */
-	public String getFileType() {
-		
-		return this.fileType;
-	}
-	
+
 	/**
 	 * Returns a list of tags the photo is associated with
-	 * 
+	 *
 	 * @return a list of tags the photo is associated with
 	 */
 	public ArrayList<Tag> getTags() {
-		
+
 		return this.tags;
 	}
-	
-	/**
-	 * Returns a list of albums that the photo is in
-	 * 
-	 * @return a list of albums that the photo is in
-	 */
-	public ArrayList<AlbumObject> getAlbums() {
-		
-		return this.albums;
-	}
-	
+
 	/**
 	 * Sets the photo
-	 * 
+	 *
 	 * @param image the image to be associated with this photo
 	 */
-	public void setPhoto(Image image) {
-		
+	public void setPhoto(Bitmap image) {
+
 		this.photo = image;
+		this.location = image.toString();
 	}
-	
+
 	/**
 	 * Sets the name of the photo
-	 * 
+	 *
 	 * @param photoName the new name of the photo
 	 */
 	public void setPhotoName(String photoName) {
-		
+
 		this.photoName = photoName;
 	}
-	
+
 	/**
 	 * Sets the caption of the photo
-	 * 
+	 *
 	 * @param caption the new caption of the photo
 	 */
 	public void setCaption(String caption) {
-		
+
 		this.caption = caption;
 	}
-	
-	/**
-	 * Sets the file type of the photo
-	 * 
-	 * @param fileType the file type of the photo
-	 */
-	public void setFileType(String fileType) {
-		
-		this.fileType = fileType;
-	}
-	
-	/**
-	 * Sets the entire tags list for a photo
-	 * 
-	 * @param tags the tags list for a photo
-	 */
-	public void setTags(ArrayList<Tag> tags) {
-		
-		this.tags = tags;
-	}
-	
-	/**
-	 * Sets the entire albums list for a photo (list of albums that
-	 * particular photo is in)
-	 * 
-	 * @param albums the list of albums the photo is in
-	 */
-	public void setAlbums(ArrayList<AlbumObject> albums) {
-		
-		this.albums = albums;
-	}
-	
+
 	/**
 	 * Adds a tag to the tags list
 	 */
@@ -210,15 +129,7 @@ public class Photo implements Serializable {
 		tags.add(new Tag(name, value));
 		return;
 	}
-	
-	/**
-	 * Adds an album to the albums list
-	 */
-	public void addAlbum() {
 
-		// TODO: Implement add album
-	}
-	
 	/**
 	 * Removes a tag from the tags list
 	 */
@@ -234,21 +145,26 @@ public class Photo implements Serializable {
 			}
 		}
 	}
-	
-	/**
-	 * Removes an album from the albums list
-	 */
-	public void removeAlbum() {
-
-		// TODO: Implement remove album
+	public String getLocation() {
+		return this.location;
+	}
+	private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+		ois.defaultReadObject();
+		int b;
+		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+		while((b = ois.read()) != -1)
+			byteStream.write(b);
+		byte bitmapBytes[] = byteStream.toByteArray();
+		photo = BitmapFactory.decodeByteArray(bitmapBytes, 0, bitmapBytes.length);
 	}
 
-	/**
-	 * Gets Date of last time picture was modified
-	 *
-	 * @return date last photo was modified
-	 */
-	public Date getDate() {
-		return this.date;
+	private void writeObject(ObjectOutputStream oos) throws IOException {
+		oos.defaultWriteObject();
+		if(photo != null){
+			ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+			photo.compress(Bitmap.CompressFormat.PNG, 0, byteStream);
+			byte bitmapBytes[] = byteStream.toByteArray();
+			oos.write(bitmapBytes, 0, bitmapBytes.length);
+		}
 	}
 }
