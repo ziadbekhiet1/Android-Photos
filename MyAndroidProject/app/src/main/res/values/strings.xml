@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Photo Albums</string>
+    <string name="save_label">SAVE</string>
+    <string name="cancel_label">CANCEL</string>
+    <string name="add">Add</string>
+    <string name ="select_tagtype">Select tag type.</string>
+    <string name="tagValue">Enter tag.</string>
+    <string name="name_label">Name: (required)</string>
+    <string-array name="tag_types">
+        <item>location</item>
+        <item>person</item>
+    </string-array>
+    <string-array name="albums_array">
+        <item>Family</item>
+        <item>Selfies</item>
+    </string-array>
+</resources>
